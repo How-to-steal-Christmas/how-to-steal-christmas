@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+          crossorigin="anonymous"></script>
+  <title>Register</title>
+  <!-- defer 에 대해 WIL 작성-->
+  <script src="../static/validation.js" defer></script>
+  <script src="../static/register.js" defer></script>
+  <link rel="stylesheet" type="text/css" href="../static/register.css">
+</head>
+<body>
+<div class="main-container">
+  <section class="auth-sidebar">
+    <div class="auth-sidebar-content">
+      <header>How to steal Chrstmas</header>
+    </div>
+  </section>
+  <section class="content">
+    <main>
+      <div class="auth-content">
+        <h2>회원 가입</h2>
+        <form>
+
+          <div class="mb-3">
+            <label for="InputName1" class="form-label">Name</label>
+            <input type="text" id="username" class="form-control" aria-describedby="nameHelp">
+            <div class="failure-message hide" style="color:red; font-size:14px; margin-top:4px;">한글, 영문, 특수문자 -,_,. 포함한 2 ~ 12글자로 만들어주세요.</div>
+            <div class="success-message hide" style="color:blue; font-size:14px; margin-top:4px;">사용할 수 있는 이름입니다.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="InputEmail1" class="form-label">Email address</label>
+            <input type="email" id="email" class="form-control" aria-describedby="emailHelp">
+            <div class="success-mail-message hide" style="color:blue; font-size:14px; margin-top:4px;">유효한 이메일 입니다.</div>
+            <div class="failure-mail-message hide" style="color:red; font-size:14px; margin-top:4px;">유효하지 않은 이메일 입니다.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="InputPassword1" class="form-label">Password</label>
+            <input type="password" id="password" class="form-control">
+            <div class="failure-password-message hide" style="color:blue; font-size:14px; margin-top:4px;">공백 없는 비밀번호를 입력하세요.</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="InputPasswordConfirm1" class="form-label">Password Confirm</label>
+            <input type="password" id="password-confirm" class="form-control">
+            <div class="mismatch-message hide" style="color:red; font-size:14px; margin-top:4px;">두 비밀번호가 일치하지 않습니다.</div>
+          </div>
+
+          <div class="mb-3 form-check">
+            <input type="checkbox" id="check" class="form-check-input">
+            <label style="font-size:14px;" class="form-check-label" for="Check1">개인정보 활용 동의</label>
+          </div>
+          <button type="button" onclick="register()" id="register-button" class="btn btn-dark">Create Account</button>
+        </form>
+      </div>
+    </main>
+  </section>
+</div>
+</body>
+</html>

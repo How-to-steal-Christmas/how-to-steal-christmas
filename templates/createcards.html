@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>How to steal your christmas</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+
+    <style>
+        .small_text {
+            text-align: center;
+        }
+
+        .big_text {
+            text-align: center;
+            padding-top: 40px;
+        }
+    </style>
+    <script>
+        function save_order() {
+            let url = $('#url').val()
+            let coupon = $('#coupon').val()
+            let comment = $('#comment').val()
+
+            $.ajax({
+                type: 'POST',
+                url: '/modal',
+                data: {
+                    // file_give: file,
+                    url_give: url,
+                    coupon_give: coupon,
+                    comment_give: comment
+                },
+                success: function (response) {
+                    alert(response['msg'])
+                    window.location.reload()
+                }
+            });
+        }
+
+    </script>
+</head>
+
+<body>
+
+<div>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h1 class="big_text"> 11월 14일 </h1>
+            <p style="padding: 2rem" class="small_text"> 예쁜 선물을 작성해 주세요 :) </p>
+
+            <div class="picture">
+                <class
+                ="rounded mx-auto d-block">
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group mb-3">
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">URL</span>
+                        <input id="url" type="text" class="form-control" placeholder="Play List"
+                               aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">쿠폰</span>
+                        <input id="coupon" type="text" class="form-control" aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">하고 싶은 말</span>
+                        <input id="comment" type="text" class="form-control"
+                               aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="save_order()">Save changes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

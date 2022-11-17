@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <title>How to steal Christmas</title>
+</head>
+<style>
+
+    .backgroundImage {
+        width: 95%;
+        max-width: 800px;
+        height: 1000px;
+        background-position: center;
+        margin: auto;
+        margin-top: 50px;
+        margin-block: 50px;
+    }
+
+    .cards {
+        width: 95%;
+        max-width: 800px;
+        margin: auto;
+        padding-top: 150px;
+        padding-bottom: 150px;
+        background-color: lightsteelblue;
+        background-image: url("https://img.freepik.com/free-vector/2d-christmas-tree-illustration_23-2148778331.jpg?w=1380&t=st=1668502585~exp=1668503185~hmac=e0d35fcfd174f573c02799a17bec70ab69ec51f6c79d28a5082f220b634619a6");
+        background-size: cover;
+        background-position: center;
+    }
+        .cards > .top1 {
+            width: 200px;
+            height: 200px;
+            margin: auto;
+            display:-webkit-box;
+            -webkit-box-orient:horizontal;
+            display: flex;
+        }
+        .cards > .top {
+            width: 200px;
+            height: 200px;
+            margin: auto;
+            display: flex;
+        }
+        .cards > .middle {
+            width: 400px;
+            height: 200px;
+            margin: auto;
+            display:-webkit-box;
+            -webkit-box-orient:horizontal;
+        }
+        .cards > .bottom {
+            width: 600px;
+            height: 200px;
+            margin: auto;
+            display:flex;
+
+        }
+     #gift {
+         width: 100px;
+         height: 100px;
+         -webkit-border-radius: 50px;
+         -moz-border-radius: 50px;
+         border-radius: 50px;
+         background: red;
+         margin-right: 50px;
+         margin-left: 50px;
+         text-align: center;
+    }
+     .finish {
+          display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+     }
+</style>
+  <script>
+      let btn = ''
+      function save_order() {
+          let url = $('#url').val()
+          let coupon = $('#coupon').val()
+          let comment = $('#comment').val()
+
+          const exampleModal = document.getElementById('exampleModal')
+          exampleModal.addEventListener('show.bs.modal', function (e) {
+              const button = e.relatedTarget
+              btn = button.getAttribute('value')
+              console.log(btn)
+
+              // let str = JSON.parse(button.getAttribute('value'))
+              // console.log(str)
+
+              // var recipient = str['date']
+              //
+              // var modalTitle = exampleModal.querySelector('.modal-title')
+              //
+
+              // modalTitle.textContent = recipient
+          })
+
+          console.log(btn)
+          $.ajax({
+              type: 'POST',
+              url: '/createcards/detail',
+              data: {
+                  url_give: url,
+                  coupon_give: coupon,
+                  comment_give: comment,
+                  calendar_name: '르탄님',
+                  idx : btn
+              },
+              success: function (response) {
+                  alert(response['msg'])
+                  window.location.reload()
+              }
+          });
+      }
+  </script>
+<div>
+    <nav class="navbar navbar-dark bg-dark fixed-top">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="https://cdn.discordapp.com/attachments/1041900572053348475/1041950897602838568/ClipartKey_38476.png" alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
+            How to steal Chirstmas
+          </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">How to steal Chirstmas</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body text-bg-dark">
+            <!-- -->
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="active" aria-current="page" href="/main" color="black">Home</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</nav>
+</div>
+<div class="backgroundImage" style="align-items: center">
+
+    <div class="cards">
+        <div class="top1">
+            <div id="gift" >
+                    <div class="card-body">
+                        <h6 class="card-title" style="color: white">11월20일</h6>
+                        <button href="#" class="btn btn links" value="6"  data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: white">만들기</button>
+                    </div>
+            </div>
+        </div>
+
+        <div class="top">
+            <div id="gift" >
+                    <div class="card-body">
+                        <h6 class="card-title" style="color: white">11월19일</h6>
+                        <button href="#" class="btn btn links" value="5"  data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: white">만들기</button>
+                    </div>
+            </div>
+        </div>
+
+        <div class="middle">
+            <div id="gift" >
+                    <div class="card-body">
+                        <h6 class="card-title" style="color: white">11월18일</h6>
+                        <button href="#" class="btn btn links" value="4"  data-bs-toggle="modal" data-bs-target="#exampleModal" value style="color: white">만들기</button>
+                    </div>
+            </div>
+            <div id="gift" >
+                    <div class="card-body">
+                        <h6 class="card-title"style="color: white">11월17일</h6>
+                        <button href="#" class="btn btn links" value="3"  data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: white">만들기</button>
+                    </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="gift" id="gift" >
+                    <div class="card-body">
+                        <h6 class="card-title" style="color: white">11월16일</h6>
+                        <button href="#" class="btn btn links" value="2"  data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: white">만들기</button>
+                    </div>
+            </div>
+            <div id="gift" >
+                    <div class="card-body">
+                        <h6 class="card-title" style="color: white">11월15일</h6>
+                        <button href="#" class="btn btn links" value="1" data-bs-toggle="modal" data-bs-target="#exampleModal" style="color: white">만들기</button>
+                    </div>
+            </div>
+            <div id="gift" >
+                    <div class="card-body">
+                        <h6 class="card-title" style="color: white">11월14일</h6>
+                        <button href="#" class="btn btn links" value="0"  style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal">만들기</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="finish">
+        <button type="button" class="btn btn-primary btn-lg" onclick="location.href='/main'"> 완료하기 </button>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <h1 class="big_text"> 내용을 입력해주세요  </h1>
+            <p style="padding: 2rem" class="small_text"> 예쁜 선물을 작성해 주세요 :) </p>
+
+            <div class="picture" class="rounded mx-auto d-block">
+            </div>
+
+            <div class="modal-body">
+                <div class="input-group mb-3">
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">URL</span>
+                        <input id="url" type="text" class="form-control" placeholder="Play List"
+                               aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">쿠폰</span>
+                        <input id="coupon" type="text" class="form-control" aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">하고 싶은 말</span>
+                        <input id="comment" type="text" class="form-control"
+                               aria-label="Username"
+                               aria-describedby="basic-addon1">
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="save_order()">Save changes</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>

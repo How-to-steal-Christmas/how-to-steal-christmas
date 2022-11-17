@@ -65,7 +65,7 @@ def user_login():
 
         payload = {
             'id': user_email,
-            'exp': datetime.datetime.utcnow() + datetime.timedelta(seconds=1005)
+            'exp': datetime.datetime.utcnow() + datetime.timedelta(minutes=30)
         }
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         return jsonify({'result': 'success', 'token': token})

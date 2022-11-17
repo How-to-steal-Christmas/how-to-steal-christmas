@@ -12,9 +12,6 @@ db = client.sparta
 def home():
    return render_template('treeforguest.html')
 
-#캘린더 조회하기에서 선택한 캘린더를 공유하면 받는사람이 볼수 있는 url 생성
-# @app.route('/calendarget', methods=['GET'])
-# def calendar_data_get():
 
 
 #받는사람은 완성된 트리로 랜딩-> 일자별 열기 누르면 모달창으로 선물을 조회함
@@ -23,18 +20,6 @@ def modal_data_get():
    modals = db.modal.find_one({'calendar_name':'test'}, {'_id':False})
    print(modals)
    return jsonify({'modals': modals})
-
-
-
-#캘린더 조회하기에서 선택한 캘린더를 삭제
-# @app.route('/calendardelete', methods=['POST'])
-# def calendar_delete():
-#
-#    db.calendar.delete_one({'name': 'bobby'})
-#    cal_delete = db.calendar.find_one({'name': 'bobby'})
-#    print(cal_delete)
-#    return jsonify({'msg': '삭제 완료'})
-
 
 
 

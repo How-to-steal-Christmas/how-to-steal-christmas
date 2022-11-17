@@ -14,6 +14,7 @@
 </head>
 <style>
 
+
     .backgroundImage {
         width: 95%;
         max-width: 800px;
@@ -36,269 +37,443 @@
         background-size: cover;
         background-position: center;
     }
-        .cards > .top1 {
-            width: 200px;
-            height: 200px;
-            margin: auto;
-            display:-webkit-box;
-            -webkit-box-orient:horizontal;
-            display: flex;
-        }
-        .cards > .top {
-            width: 200px;
-            height: 200px;
-            margin: auto;
-            display: flex;
-        }
-        .cards > .middle {
-            width: 400px;
-            height: 200px;
-            margin: auto;
-            display:-webkit-box;
-            -webkit-box-orient:horizontal;
-        }
-        .cards > .bottom {
-            width: 600px;
-            height: 200px;
-            margin: auto;
-            display:flex;
 
-        }
-     #gift {
-         width: 100px;
-         height: 100px;
-         -webkit-border-radius: 50px;
-         -moz-border-radius: 50px;
-         border-radius: 50px;
-         background: red;
-         margin-right: 50px;
-         margin-left: 50px;
-         text-align: center;
+    .cards > .top1 {
+        width: 200px;
+        height: 200px;
+        margin: auto;
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+        display: flex;
+    }
+
+    .cards > .top {
+        width: 200px;
+        height: 200px;
+        margin: auto;
+        display: flex;
+    }
+
+    .cards > .middle {
+        width: 400px;
+        height: 200px;
+        margin: auto;
+        display: -webkit-box;
+        -webkit-box-orient: horizontal;
+    }
+
+    .cards > .bottom {
+        width: 600px;
+        height: 200px;
+        margin: auto;
+        display: flex;
+
+    }
+
+    #gift {
+        width: 100px;
+        height: 100px;
+        -webkit-border-radius: 50px;
+        -moz-border-radius: 50px;
+        border-radius: 50px;
+        background: red;
+        margin-right: 50px;
+        margin-left: 50px;
+        text-align: center;
 
 
     }
+    .open {
+        background-color: transparent;
+        border: none;
+    }
+
+
+    .close {
+        background-color: transparent;
+        border: none;
+        pointer-events: none;
+
+    }
+
 </style>
+
 <script>
+    $(document).ready(function () {
+          modal_data_get()
+      });
+
+    function congrats() {
+                    alert('축하드려요!');
+                }
+
+    function sorry() {
+        alert('아직어었되짜가 안');
+    }
     function modal_data_get() {
+        let n = '르탄님'
+        console.log(n)
+
+        const refresh = new Date(); // 로드 되었을 때의 시간
+        const year = refresh.getFullYear();
+        const month = refresh.getMonth();
+        const date = refresh.getDate();
+        const hour = refresh.getHours();
+        const min = refresh.getMinutes();
+        const sec = refresh.getSeconds();
+        const refresh_time_string = `${month+1}월${date}일`;
+
+        let first_card = ''
+        let second_card = ''
+        let third_card = ''
+        let fourth_card = ''
+        let fifth_card = ''
+        let sixth_card = ''
+        let seventh_card = ''
+
+
+
         $.ajax({
-            type: 'GET',
-            url: '/tree/details',
-            data: {},
-            // success: function (response) {
-            //     let rows = response['modals']
-            //     for (let i =0; i<rows.length; i++){
-            //
-            //         let url= rows[i]['url']
-            //         let coupon = rows[i]['coupon']
-            //         let comment = rows[i]['comment']
-            //
-            //         let temp_html =
-            //             `<div class="modal-dialog">
-            //                         <div class="modal-content">
-            //                         <div class="modal-header">
-            //                             <p class="big_text">선물이 도착했어요~</p>
-            //                         </div>
-            //                         <div class="modal-body">
-            //
-            //                             <p><a href="${url}" data-bs-toggle="tooltip" title="url">링크를 따라가 보세요</a></p>
-            //                             <p>사용가능한 쿠폰${coupon}</p>
-            //                             <p>선물 메세지${comment}</p>
-            //                         </div>
-            //                         <div class="modal-footer">
-            //                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기
-            //                             </button>
-            //                         </div>
-            //
-            //                     </div>
-            //                     </div>`
-            //         $('#exampleModal').append(temp_html)
-            //
-            //     }
-            // }
-            success: function (response){
+            type: "GET",
+            url: "/tree/details",
+            data: {calendar_name: n},
+            success: function (response) {
+                // let row = response['modals']['item'][0]['date'];
+                let row = response['modals']['item'];
 
-                for (const i of response['modals']['item']) {
-                    let url = i['url']
-                    let coupon = i['coupon']
-                    let comment = i['comment']
-                    if(i['date'] ==="2022-11-14"){
+                first_card = row[0]
+                second_card = row[1]
+                third_card = row[2]
+                fourth_card = row[3]
+                fifth_card = row[4]
+                sixth_card = row[5]
+                seventh_card = row[6]
 
-                        let temp_html =`
+                console.log(first_card)
+                console.log(seventh_card)
 
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <p class="big_text">선물이 도착했어요~</p>
-                                    </div>
-                                    <div class="modal-body">
+                console.log(JSON.stringify(first_card))
+                console.log(JSON.stringify(seventh_card))
 
-                                        <p><a href="${url}" data-bs-toggle="tooltip" title="url">링크를 따라가 보세요</a></p>
-                                        <p>사용가능한 쿠폰 ${coupon}</p>
-                                        <p>선물 메세지 ${comment}</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기
-                                        </button>
-                                    </div>
 
-                                </div>
-                                </div>
+                document.getElementById("btn1").value = JSON.stringify(first_card);
+                document.getElementById("btn2").value = JSON.stringify(second_card);
+                document.getElementById("btn3").value = JSON.stringify(third_card);
+                document.getElementById("btn4").value = JSON.stringify(fourth_card);
+                document.getElementById("btn5").value = JSON.stringify(fifth_card);
+                document.getElementById("btn6").value = JSON.stringify(sixth_card);
+                document.getElementById("btn7").value = JSON.stringify(seventh_card);
 
-                            </div>`
-                        $('exampleModal').append(temp_html)
+
+                const myBtn1 = document.querySelector('#btn1');
+                const myBtn2 = document.querySelector('#btn2');
+                const myBtn3 = document.querySelector('#btn3');
+                const myBtn4 = document.querySelector('#btn4');
+                const myBtn5 = document.querySelector('#btn5');
+                const myBtn6 = document.querySelector('#btn6');
+                const myBtn7 = document.querySelector('#btn7');
+
+                const date_1 = myBtn1.textContent;
+                const date_2 = myBtn2.textContent;
+                const date_3 = myBtn3.textContent;
+                const date_4 = myBtn4.textContent;
+                const date_5 = myBtn5.textContent;
+                const date_6 = myBtn6.textContent;
+                const date_7 = myBtn7.textContent;
+
+
+
+                function comparison(btn) {
+                    if (refresh_time_string >= btn.textContent) {
+                        console.log(btn.textContent)
+                        btn.setAttribute('class', 'open')
+                        btn.setAttribute('onclick', 'congrats();')
+                    } else {
+                        btn.setAttribute('onclick', 'sorry();')
+                        btn.setAttribute('class', 'close')
+
+
                     }
                 }
-                // console.log(response['modals']['item'])
+
+
+                comparison(myBtn1);
+                comparison(myBtn2);
+                comparison(myBtn3);
+                comparison(myBtn4);
+                comparison(myBtn5);
+                comparison(myBtn6);
+                comparison(myBtn7);
+
+
+
+
+
+
+
+
+
+                const exampleModal= document.getElementById('exampleModal')
+                  exampleModal.addEventListener('show.bs.modal', function (event) {
+                      const button = event.relatedTarget
+
+                      let str = JSON.parse(button.getAttribute('value'))
+                      console.log(str)
+
+                      const recipient = str['date']
+                      const recipient3 = str['url']
+                      const recipient4 = str['coupon']
+                      const recipient5 = str['comment']
+
+                      const modalTitle = exampleModal.querySelector('.modal-title')
+                      const modalUrl = exampleModal.querySelector('.modal-url')
+                      const modalCoupon = exampleModal.querySelector('.modal-coupon')
+                      const modalComment = exampleModal.querySelector('.modal-comment')
+
+                      modalTitle.textContent = recipient
+
+                      modalUrl.setAttribute("href", recipient3)
+                      modalUrl.textContent = recipient3
+
+                      modalCoupon.textContent = recipient4
+                      modalComment.textContent = recipient5
+
+                      /*
+                      *
+                      * */
+                  })
+                // let day1 = document.getElementById('day1').textContent
+                // let day2 = document.getElementById('day2').textContent
+                // let day3 = document.getElementById('day3').textContent
+                // let day4 = document.getElementById('day4').textContent
+                // let day5 = document.getElementById('day5').textContent
+                // let day6 = document.getElementById('day6').textContent
+                // let day7 = document.getElementById('day7').textContent
+
+                // let modalUrl = exampleModal.querySelector('.modal-url')
+                // let modalCoupon = exampleModal.querySelector('.modal-coupon')
+                // let modalComment = exampleModal.querySelector('.modal-comment')
+                // console.log(date)
+
+                // if (date === '2022-11-14'){
+                //    let temp_html = `<div class="modal-dialog">
+                //                      <div class="modal-content">
+                //                     <div class="modal-header">
+                //                       <p class="big_text">선물이 도착했어요~</p>
+                //                      </div>
+                //                      <div class="modal-body">
+                //
+                //                          <p><a href="url" data-bs-toggle="tooltip" title="url">링크를 따라가 보세요</a></p>
+                //                          <p>사용가능한 쿠폰coupon</p>
+                //                          <p>선물 메세지comment</p>
+                //                      </div>
+                //                      <div class="modal-footer">
+                //                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기
+                //                          </button>
+                //                      </div>
+                //
+                //                  </div>
+                //                  </div>`
+                //      $('#modal_append').append(temp_html)
+                // }
             }
         });
-
     }
 
+    // success: function (response) {
+    //     let rows = response['modals']
+    //     for (let i =0; i<rows.length; i++){
+    //
+    //         let url= rows[i]['url']
+    //         let coupon = rows[i]['coupon']
+    //         let comment = rows[i]['comment']
+    //
+    //         let temp_html =
+    //             `<div class="modal-dialog">
+    //                         <div class="modal-content">
+    //                         <div class="modal-header">
+    //                             <p class="big_text">선물이 도착했어요~</p>
+    //                         </div>
+    //                         <div class="modal-body">
+    //
+    //                             <p><a href="${url}" data-bs-toggle="tooltip" title="url">링크를 따라가 보세요</a></p>
+    //                             <p>사용가능한 쿠폰${coupon}</p>
+    //                             <p>선물 메세지${comment}</p>
+    //                         </div>
+    //                         <div class="modal-footer">
+    //                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기
+    //                             </button>
+    //                         </div>
+    //
+    //                     </div>
+    //                     </div>`
+    //         $('#exampleModal').append(temp_html)
+    //
+    //     }
+    // }
+    // success: function (response){
+    // const urls = []
+    // const coupons = []
+    // const comments = []
+    //
+    // for (const i of response['modals']['item']) {
+    //     let url = i['url']
+    //     let coupon = i['coupon']
+    //     let comment = i['comment']
+    //
+    //     urls.push(url)
+    //     coupons.push(coupon)
+    //     comments.push(comment)
+    // }
+    //
+    //
+    //     if(i['date'] ==='2022-11-14'){
+    //         console.log('hi')
 </script>
-<script>
-const today = new Date();
-
-for (let i = 0; i < 7; i++) {
-	const dateSet = [
-  	'2022-11-14', '2022-11-15', '2022-11-16',
-    '2022-11-17', '2022-11-18', '2022-11-19', '2022-11-20'
-  ];
-const start = new Date(dateSet[i]);
-
-	let temp_html = ``;
-        if (today > start) {
-            temp_html = `<div class="card-body">
-                            <h6 class="card-title" style="color: white">${i}</h6>
-                            <a href="#" class="btn btn links" style="color: white">열기</a>
-                        </div>`
-
-        } else {
-            temp_html = `<div class="card-body">
-                            <h6 class="card-title" style="color: white">${i}</h6>
-
-                        </div>`
-
-        }
-    $('#gift').append(temp_html);
-}
 
 
-</script>
 
 <body>
 
 <!-- navigation bar -->
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-dark fixed-top">
         <div class="container-fluid">
             <a class="navbar-brand" href="#"><img
                     src="https://cdn.discordapp.com/attachments/1041900572053348475/1041950897602838568/ClipartKey_38476.png"
-                    alt="Logo" width="50" height="50" class="d-inline-block align-text-top">
+                    alt="Logo" width="30" height="24" class="d-inline-block align-text-top">
                 How to Steal Christmas</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <form class="d-flex" role="search">
-                    <button class="btn btn-outline-success" type="submit">회원가입</button>
-                    <button class="btn btn-outline-success" type="submit">로그인</button>
-                </form>
-            </div>
+            <button class="navbar-toggler" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+            <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar" aria-labelledby="offcanvasDarkNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasDarkNavbarLabel">How to steal Chirstmas</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body text-bg-dark">
+            <!-- -->
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <a class="active" aria-current="page" href="#" color="black">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="#">회원가입</a>
+            </li>
+            <li class="nav-item">
+                <a href="#">로그인</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
         </div>
 </nav>
 
-
-
 <div class="backgroundImage" style="align-items: center">
-
     <div class="cards">
         <div class="top1">
-
-            <div id="gift" >
-                    <div class="card-body">
-                        <h6 class="card-title" style="color: white">11월20일</h6>
-                        <a href="#" class="btn btn links" style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal">열기</a>
-                    </div>
-            </div>
-
-
-        </div>
-
-        <div class="top">
-            <div id="gift" >
-                    <div class="card-body">
-                        <h6 class="card-title" style="color: white">11월19일</h6>
-                        <a href="#" class="btn btn links" style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal">열기</a>
-                    </div>
-            </div>
-
-        </div>
-
-        <div class="middle">
-            <div id="gift" >
-                    <div class="card-body" >
-                        <h6 class="card-title" style="color: white">11월18일</h6>
-                        <a href="#" class="btn btn links" style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal">열기</a>
-                    </div>
-            </div>
-            <div id="gift" >
-                    <div class="card-body">
-                        <h6 class="card-title" style="color: white" >11월17일</h6>
-                        <a href="#" class="btn btn links" style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal">열기</a>
-                    </div>
-            </div>
-        </div>
-
-        <div class="bottom">
-            <div id="gift" >
-                    <div class="card-body">
-                        <h6 class="card-title" style="color: white">11월16일</h6>
-                        <a href="#" class="btn btn links" style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal">열기</a>
-                    </div>
-            </div>
-            <div id="gift" >
-                    <div class="card-body">
-                        <h6 class="card-title" style="color: white">11월15일</h6>
-                        <a href="#" class="btn btn links" style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal">열기</a>
-                    </div>
-            </div>
-            <div id="gift" >
-                    <div class="card-body">
-                        <h6 class="card-title" style="color: white">11월14일</h6>
-                        <a href="#" class="btn btn links" style="color: white" data-bs-toggle="modal" data-bs-target="#exampleModal" onclick="modal_data_get()">열기</a>
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <p class="big_text">선물이 도착했어요~</p>
-                                    </div>
-                                    <div class="modal-body">
-
-                                        <p><a href="#" data-bs-toggle="tooltip" title="url">링크를 따라가 보세요</a></p>
-                                        <p>사용가능한 쿠폰</p>
-                                        <p>선물 메세지</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기
-                                        </button>
-                                    </div>
-
-                                </div>
-                                </div>
-
-                            </div>
-
-                    </div>
-
-
+            <div id="gift">
+                <div class="card-body">
+<!--                    <h6 class="card-title" id="day7" style="color: white">2022-11-20</h6>-->
+                    <button id="btn7" type="button" class="close" style="color: white; font-size:14px;" data-bs-toggle="modal" data-bs-target="#exampleModal" value="{&quot;comment&quot;:&quot;안녕!&quot;,&quot;coupon&quot;:&quot;안마 쿠폰&quot;,&quot;date&quot;:&quot;2022-11-20&quot;,&quot;file&quot;:&quot;ob7.jpg&quot;,&quot;url&quot;:&quot;https://www.youtube.com/watch?v=TwNbzJS9oGI&quot;}" onclick="sorry();">11월20일
+                    </button>
                 </div>
-
             </div>
         </div>
+        <div class="top">
+            <div id="gift">
+                <div class="card-body">
+<!--                    <h6 class="card-title" id="day6" style="color: white">2022-11-20</h6>-->
+                    <button id="btn6" type="button" class="close" style="color: white; font-size:14px" data-bs-toggle="modal" data-bs-target="#exampleModal" value="{&quot;comment&quot;:&quot;comment6&quot;,&quot;coupon&quot;:&quot;couopn6&quot;,&quot;date&quot;:&quot;2022-11-19&quot;,&quot;file&quot;:&quot;ob6.jpg&quot;,&quot;url&quot;:&quot;naver.com&quot;}" onclick="sorry();">11월19일</button>
+                </div>
+            </div>
+        </div>
+        <div class="middle">
+            <div id="gift">
+                <div class="card-body">
+<!--                    <h6 class="card-title" id="day5" style="color: white">2022-11-18</h6>-->
+                    <button id="btn5" type="button" class="close" style="color: white; font-size:14px;" data-bs-toggle="modal" data-bs-target="#exampleModal" value="{&quot;comment&quot;:&quot;comment5&quot;,&quot;coupon&quot;:&quot;coupon5&quot;,&quot;date&quot;:&quot;2022-11-18&quot;,&quot;file&quot;:&quot;ob5.jpg&quot;,&quot;url&quot;:&quot;google.com&quot;}" onclick="sorry();">11월18일</button>
+                </div>
+            </div>
+            <div id="gift">
+                <div class="card-body">
+<!--                    <h6 class="card-title" id="day4" style="color: white">2022-11-17</h6>-->
+                    <button id="btn4" type="button" class="open" style="color: white; font-size:14px;" data-bs-toggle="modal" data-bs-target="#exampleModal" value="{&quot;comment&quot;:&quot;공부하자&quot;,&quot;coupon&quot;:&quot;리액트 강의 쿠폰&quot;,&quot;date&quot;:&quot;2022-11-17&quot;,&quot;file&quot;:&quot;ob4.jpg&quot;,&quot;url&quot;:&quot;https://www.youtube.com/watch?v=z9YIawYDic0&quot;}" onclick="congrats();">11월17일</button>
+                </div>
+            </div>
+        </div>
+        <div class="bottom">
+            <div id="gift">
+                <div class="card-body">
+<!--                    <h6 class="card-title" id="day3" style="color: white">2022-11-16</h6>-->
+                    <button type="button" id="btn3" class="open" style="color: white; font-size:14px;" data-bs-toggle="modal" data-bs-target="#exampleModal" value="{&quot;comment&quot;:&quot;내가 강의 해줄게&quot;,&quot;coupon&quot;:&quot;자바스크립트 강의 쿠폰&quot;,&quot;date&quot;:&quot;2022-11-16&quot;,&quot;file&quot;:&quot;ob3.jpg&quot;,&quot;url&quot;:&quot;https://www.jibjab.com/browse/holiday-ecards&quot;}" onclick="congrats();">11월16일</button>
+                </div>
+            </div>
+            <div id="gift">
+                <div class="card-body">
+<!--                    <h6 class="card-title" id="day2" style="color: white">2022-11-15</h6>-->
+                    <button type="button" id="btn2" class="open" style="color: white; font-size:14px;" data-bs-toggle="modal" data-bs-target="#exampleModal" value="{&quot;comment&quot;:&quot;바보야&quot;,&quot;coupon&quot;:&quot;데이트 햊귀 쿠폰&quot;,&quot;date&quot;:&quot;2022-11-15&quot;,&quot;file&quot;:&quot;ob2.jpeg&quot;,&quot;url&quot;:&quot;https://santatracker.google.com/intl/ko/&quot;}" onclick="congrats();">11월15일
+                    </button>
+                </div>
+            </div>
+            <div id="gift">
+                <div class="card-body">
+<!--                    <h6 class="card-title" id="day1" style="color: white">2022-11-14</h6>-->
+                    <button type="button" id="btn1" class="open" style="color: white; font-size:14px;" data-bs-toggle="modal" data-bs-target="#exampleModal" value="{&quot;comment&quot;:&quot;항해99 많이 힘들지~커피마시고 힘내자!&quot;,&quot;coupon&quot;:&quot;소원권!&quot;,&quot;date&quot;:&quot;2022-11-14&quot;,&quot;file&quot;:&quot;ob1.jpeg&quot;,&quot;url&quot;:&quot;https://www.youtube.com/watch?v=1CYbySbtyF0&quot;}" onclick="congrats();">11월14일
+                    </button>
+<!--                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"-->
+<!--                         aria-hidden="true">-->
+<!--                        <div class="modal-dialog" id="modal_append">-->
+                            <!--                                <div class="modal-content">-->
+                            <!--                                    <div class="modal-header">-->
+                            <!--                                        <p class="big_text">선물이 도착했어요~</p>-->
+                            <!--                                    </div>-->
+                            <!--                                    <div class="modal-body">-->
+
+                            <!--                                        <p><a href="#" data-bs-toggle="tooltip" title="url">링크를 따라가 보세요</a></p>-->
+                            <!--                                        <p>사용가능한 쿠폰</p>-->
+                            <!--                                        <p>선물 메세지</p>-->
+                            <!--                                    </div>-->
+                            <!--                                    <div class="modal-footer">-->
+                            <!--                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기-->
+                            <!--                                        </button>-->
+                            <!--                                    </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-
-
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="display: none;">
+  <div class="modal-dialog" id="modal_append">
+    <div class="modal-content">
+      <div class="modal-header" style="text-align: center;">
+        <h5 class="modal-title" id="exampleModalLabel">2022-11-14</h5>
+      </div>
+      <div class="modal-body">
+          <h3>선물이 도착했어요!</h3>
+        <form>
+          <div class="mb-3" id="url">
+              <h5>링크를 따라가보세요~</h5>
+              <a href="https://www.youtube.com/watch?v=1CYbySbtyF0" class="modal-url" id="exampleModalLabel" target="_blank">https://www.youtube.com/watch?v=1CYbySbtyF0</a>
+          </div>
+            <div class="mb-3" id="coupon">
+                <h5>쿠폰</h5>
+              <h5 style="font-weight: 400; font-size:14px;" class="modal-coupon" id="exampleModalLabel">소원권!</h5>
+          </div>
+          <div class="mb-3" id="comment">
+              <h5>메세지</h5>
+            <h5 style="font-weight: 400; font-size:14px;" class="modal-comment" id="exampleModalLabel">항해99 많이 힘들지~커피마시고 힘내자!</h5>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 
 </body>

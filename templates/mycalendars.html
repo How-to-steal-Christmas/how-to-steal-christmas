@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+
+        <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+
+        <title>My Page</title>
+
+        <style>
+            .mytitle {
+                width: 100%;
+                height: 250px;
+    
+                background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://r-scale-a5.dcs.redcdn.pl/scale/o2/n/tvod/upload/vod/2057/images/6939?dsth=720&dstw=1280&srcmode=0&srcx=0&srcy=0&quality=80&type=1&srcw=1/1&srch=1/1');
+                background-position: 10% 20%;
+                background-size: cover;
+    
+                color: white;
+
+                display: flex;
+                flex-direction: column;
+
+                justify-content: center;
+
+                padding-left: 20px;
+            }
+
+
+            #create {
+                width: 100%;
+                height: 50%;
+                margin-left: auto;
+                margin-right: auto;
+
+
+
+
+            }
+
+            .mycards {
+                margin: 20px auto 0px auto;
+                width: 95%;
+                max-width: 1200px;
+            }
+
+            #inp-cname {
+                padding: 1px;
+            }
+
+
+            /* media quary*/
+        </style>
+        <script>
+            $(document).ready(function () {
+                const name = '박민수';
+                load_calendar();
+                const di = `<h2>${name}님 안녕하세요?</h2>`;
+                $('.mytitle').append(di);
+            });
+
+
+
+
+            function create_tree() {
+                const today = new Date(); // 만들기를 눌렀을 때의 시간
+                const year = today.getFullYear();
+                const month = today.getMonth();
+                const date = today.getDate();
+                const hour = today.getHours();
+                const min = today.getMinutes();
+                const sec = today.getSeconds();
+
+                const create_time_string = `${year}-${month+1}-${date} ${hour}:${min}:${sec}`;
+                console.log(create_time_string);
+
+                /* authentication  */
+                const email = `peterparker@kakao.com`;
+                const user_name = `박민수`;
+
+                let calendar_name = '이름을 지어주세요.';
+                let file = 'null';
+                let url = 'https://naver.com';
+                let coupon = '너를 위한 쿠폰';
+                let comment = '너를 위한 메시지';
+
+
+                $.ajax({
+                    type: "POST",
+                    url: "/createtree",
+                    data: {
+                        today_give: today.getTime(),
+                        email_give: email,
+                        user_name_give: user_name,
+                        calendar_name_give: calendar_name,
+                        file_give: file,
+                        url_give: url,
+                        coupon_give: coupon,
+                        comment_give: comment,
+                        create_time_give: create_time_string
+                    },
+                    success: function (response) {
+                        alert(response["msg"])
+                        window.location.reload();
+                    }
+                });
+            }
+
+            function elapsedTime(start, refresh) {
+                // 시간 설정 관련
+                const timedelta = refresh - start;
+                const times = [
+                    { time: "분", milliSeconds: 1000 * 60 },
+                    { time: "시간", milliSeconds: 1000 * 60 * 60 },
+                    { time: "일", milliSeconds: 1000 * 60 * 60 * 24 },
+                    { time: "개월", milliSeconds: 1000 * 60 * 60 * 24 * 30 },
+                    { time: "년", milliSeconds: 1000 * 60 * 60 * 24 * 365 },
+                ].reverse();
+
+                // 년 단위부터 알맞는 단위 찾기
+                for (const value of times) {
+                    const betweenTime = Math.floor( timedelta / value.milliSeconds);
+
+                    // 큰 단위는 0보다 작은 소수점 값이 나옴
+                    if (betweenTime > 0) {
+                        const elasedTime = `${betweenTime}${value.time} 전`;
+
+                        return elapsedTime;
+                    } else {
+                        const elapsedTime = `방금 전`;
+
+                        return elapsedTime;
+                    }
+                }
+            }
+
+
+            function load_calendar() {
+                /*const email = 'peterparker@kakao.com';
+                const name = `박민수`;*/
+                const refresh = new Date(); // 로드 되었을 때의 시간
+                const year = refresh.getFullYear();
+                const month = refresh.getMonth();
+                const date = refresh.getDate();
+                const hour = refresh.getHours();
+                const min = refresh.getMinutes();
+                const sec = refresh.getSeconds();
+                const refresh_time_string = `${year}-${month+1}-${date} ${hour}:${min}:${sec}`;
+                console.log(refresh_time_string);
+
+                $.ajax({
+                    type: "GET",
+                    url: "/mycalendars",
+                    data: {},
+                    success: function (response) {
+                        console.log(response['calendar']);
+
+                        const rows = response['calendar'];
+
+                        for (let i = 0; i < rows.length ; i++) {
+                            const calendar_name = rows[i]['calendar_name'];
+                            const email = rows[i]['email'];
+                            const items = rows[i]['item'];
+                            const user_name = rows[i]['user_name'];
+                            const today = rows[i]['today'];
+                            const idx = rows[i]['idx'];
+                            const create_time = rows[i]['create_time'];
+
+                            console.log(idx);
+                            // const timedelta = (+refresh) - today;
+                            console.log(create_time);
+                            console.log(refresh);
+
+                            const file = items[i]['file'];
+                            const url = items[i]['url'];
+                            const coupon = items[i]['coupon'];
+                            const comment = items[i]['comment'];
+
+                            console.log(refresh.getTime());
+
+                            const elapsed = elapsedTime(create_time, refresh);
+
+                            let di = '';
+                            // About calendar_name
+                            if (calendar_name === '이름을 지어주세요.') {
+                                di = `<div class="col btn-outline-danger" >
+                                    <div class="card h-100 border-success btn">
+                                        <div class="card-header bg-transparent border-success">
+                                            <div class="row">
+                                                <div class="col-8 btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#staticBackdropView" href="#">${user_name}님의 트리</div>
+                                                <div class="btn-group dropend col-4 w-15">
+                                                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                      more
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdropMod" href="#">수정하기</a></li>
+                                                        <li><a class="dropdown-item" href="#">공유하기</a></li>
+                                                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdropDel" href="#">삭제하기</a></li>
+                                                    </ul>
+                                                  </div>
+
+                                            </div>
+                                            </div>
+                                        <img src="http://gimbabrecords.com/web/product/big/202012/243c1fefd886c896b2f70f342bd7e808.jpg" class="card-img-top" alt="..." data-bs-toggle="modal" data-bs-target="#staticBackdropView" href="#">
+                                        <div class="card-body text-success title-body" data-bs-toggle="modal" data-bs-target="#staticBackdropView" href="#">
+                                            <div class="input-group mb-3">
+                                                <input id="inp-cname" type="text" class="form-control fs-6" placeholder="${calendar_name}" aria-label="calendar_name" aria-describedby="button-addon2">
+                                                <button onclick="initialize_calendar(${idx})" class="btn btn-outline-secondary" type="button" id="button-addon2">Button</button>
+                                              </div>
+
+                                        </div>
+
+                                        <div class="card-footer" data-bs-toggle="modal" data-bs-target="#staticBackdropView" href="#">
+                                            <small class="text-muted bg-transparent border-success">Last updated ${elapsed}</small>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            } else {
+                                di = `<div class="col btn-outline-danger" >
+                                    <div class="card h-100 border-success">
+                                        <div class="card-header bg-transparent border-success">
+                                            <div class="row">
+                                                <div class="col-8 btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdropView" href="#">${user_name}님의 트리</div>
+                                                <div class="btn-group dropend col-4 w-15">
+                                                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                      more
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+                                                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdropMod" href="#">수정하기</a></li>
+                                                        <li><a class="dropdown-item" href="#">공유하기</a></li>
+                                                        <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#staticBackdropDel" href="#">삭제하기</a></li>
+                                                    </ul>
+                                                  </div>
+                                            </div>
+                                            </div>
+                                        <img src="http://gimbabrecords.com/web/product/big/202012/243c1fefd886c896b2f70f342bd7e808.jpg" class="card-img-top" alt="..." data-bs-toggle="modal" data-bs-target="#staticBackdropView" href="#">
+                                        <div class="card-body text-success" data-bs-toggle="modal" data-bs-target="#staticBackdropView" href="#">
+                                            <div class="row title-body" >
+                                                <h5 class="card-title">${calendar_name}</h5>
+                                                </div>
+                                        </div>
+
+                                        <div class="card-footer" data-bs-toggle="modal" data-bs-target="#staticBackdropView" href="#">
+                                            <small class="text-muted bg-transparent border-success">Last updated ${elapsed}</small>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            }
+
+                            /* <h5 class="card-title col-9">${calendar_name}</h5>
+                                                <button onclick="change_calendar(${idx})" type="button" class="btn btn-outline-success col-3">수정</button>
+                                            */
+
+
+                            console.log(calendar_name, email, items, name);
+                            // console.log(timedelta);
+
+
+
+                            const del = `<div class="modal fade" id="staticBackdropDel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">
+                                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                                        캘린더 삭제</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>'${calendar_name}' 캘린더를 정말 삭제하시겠어요?</p>
+                                        <p>삭제한 뒤에는 복구할 수 없습니다.</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+                                    <button type="button" class="btn btn-danger" onclick="delete_calendar(${idx})">예, 삭제할게요.</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div> `;
+
+                            const mod = `<div class="modal fade" id="staticBackdropMod" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">
+                                        선물하고자 하는 추억이 담긴 사진, 케롤 플레이 리스트URL, 선물의
+                                        상세페이지 url또는 쿠폰을
+                                        입력해주세요.</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <input type="file" class="form-control" id="file" value="${file}">
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">URL</span>
+                                                <input id="url" type="text" class="form-control" placeholder="url"
+                                                       aria-label="url"
+                                                       aria-describedby="basic-addon1" value="${url}">
+                                            </div>
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">쿠폰</span>
+                                                <input id="coupon" type="text" class="form-control"
+                                                       aria-label="Username"
+                                                       aria-describedby="basic-addon1" value="${coupon}">
+                                            </div>
+
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text">하고 싶은 말</span>
+                                                <input id="comment" type="text" class="form-control"
+                                                       placeholder="comment"
+                                                       aria-label="comment"
+                                                       aria-describedby="basic-addon1" value="${comment}">
+                                            </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+                                    <button type="button" class="btn btn-danger" onclick="delete_calendar(${idx})">예, 삭제할게요.</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div> `;
+
+                            const view_mod = `<div class="modal fade" id="staticBackdropView" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                              <div class="modal-dialog">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">Modal title</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    ...
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Understood</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>`;
+
+                            $('#cards-box').append(di);
+                            $('#cards-box').append(del);
+                            $('#cards-box').append(mod);
+                            $('#cards-box').append(view_mod);
+
+                            /*$('#file').attr('value', file);
+                            $('#url').attr('value', url);
+                            $('#coupon').attr('value', coupon);
+                            $('#comment').attr('value', comment);*/
+                        }
+                    }
+                })
+            }
+
+
+            // 각각을 수정하는 방법
+            // 키보드 이벤트로 할 수도 있는데, 그건 너무 복잡할 거 같고
+            // 그냥 input에서 하나 하나 edit 할 수 있게 만든다면 change_things 같은 함수를 만들어서 각각 처리할 수 있을 것으로 보임
+
+            /* input에 값넣고 값넣고 값넣고 수정하기 버튼 누르면 걍 수정 이전값과 값넣은 거 불러온 것 같으면 안하고 다르면 데이터 보내서 보낸 데이터 다 수정*/
+            function initialize_calendar(idx) {
+                const mail = 'peterparker@kakao.com';
+                const user_name = '박민수';
+                /* 추가되어야 할 로직
+                /**
+                /* 전 이름과 밸로 들어온 새 이름을 비교 후 같다면 수정할 필요없이 보낼 필요도 없음
+                */
+                const calendar_name = $('#inp-cname').val();
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/mycalendars/edit/calendar',
+                    data: { idx_give: idx, mail_give: mail, user_name_give: user_name, calendar_name_give: calendar_name },
+                    success: function (response) {
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
+                })
+            }
+
+
+
+            function delete_calendar(idx) {
+                const mail = 'peterparker@kakao.com';
+                const user_name = '박민수';
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/mycalendars/delete',
+                    data: { idx_give: idx, mail_give: mail, user_name_give: name },
+                    success: function (response) {
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
+                })
+            }
+
+            /*function tree_view(idx) {
+
+
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/mycalendars/view',
+                    data: { idx_give: idx, mail_give: mail, user_name_give: name },
+                    success: function (response) {
+                        alert(response['msg'])
+                        window.location.reload()
+                    }
+                })
+            }
+
+            const myCard = document.querySelector('.card');
+            myCard.addEventListener('click', tree_view);*/
+
+
+        </script>
+    </head>
+
+    <body>
+        <div class="mytitle">
+            <h1>MY PAGE</h1>
+        </div>
+        <div class="btn-area">
+
+        </div>
+
+        <div class="mycards">
+
+            <div class="row row-cols-1 row-cols-md-4 g-4" id="cards-box">
+                <div class="col" style="border: 1px solid green">
+
+                            <button id="create" type="button" class="btn btn-outline-danger">캘린더 만들기</button>
+
+                </div>
+                <div class="col">
+                    <div class="card h-100 border-success">
+                        <div class="card-header bg-transparent border-success">
+                            <div class="row">
+                                <div class="col-8">name님을 위한 트리</div>
+                                <div class="btn-group dropend col-4 w-15">
+                                    <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                      more
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">수정하기</a></li>
+                                        <li><a class="dropdown-item" href="#">공유하기</a></li>
+                                        <li><a class="dropdown-item calDetele" data-bs-toggle="modal" data-bs-target="#staticBackdrop" href="#">삭제하기</a></li>
+                                    </ul>
+                                  </div>
+                            </div>
+                            </div>
+                        <img src="http://gimbabrecords.com/web/product/big/202012/243c1fefd886c896b2f70f342bd7e808.jpg" class="card-img-top" alt="...">
+                        <div class="card-body text-success">
+                            <h5 class="card-title">카드이름 쓰기</h5>
+                        </div>
+
+                        <div class="card-footer">
+                            <small class="text-muted bg-transparent border-success">Last updated 3 mins ago</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Modal for deleting calendar -->
+         <!--<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                    캘린더 삭제</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                정말 삭제하시겠어요? 삭제한 뒤에는 복구할 수 없습니다.
+                </div>
+                <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소하기</button>
+                <button type="button" class="btn btn-danger" id="deleteBtn">예, 삭제할게요.</button>
+                </div>
+            </div>
+            </div>
+        </div> -->
+
+        <!-- 아이콘 -->
+        <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+            <symbol id="check-circle-fill" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+            </symbol>
+            <symbol id="info-fill" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 16A8 8 0 1 0 8 0a8 8 0 0 0 0 16zm.93-9.412-1 4.705c-.07.34.029.533.304.533.194 0 .487-.07.686-.246l-.088.416c-.287.346-.92.598-1.465.598-.703 0-1.002-.422-.808-1.319l.738-3.468c.064-.293.006-.399-.287-.47l-.451-.081.082-.381 2.29-.287zM8 5.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z"/>
+            </symbol>
+            <symbol id="exclamation-triangle-fill" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+            </symbol>
+          </svg>
+
+        <script>
+            const createBtn = document.querySelector('#create');
+            createBtn.addEventListener('click', create_tree);
+        </script>
+
+
+    </body>
+
+
+</html>

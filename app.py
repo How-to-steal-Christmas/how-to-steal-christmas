@@ -7,8 +7,7 @@ app = Flask(__name__)
 
 from pymongo import MongoClient
 ca = certifi.where()
-client = MongoClient("mongodb+srv://jominuk:alsdnr1549-@cluster0.pto4r2x.mongodb.net/?retryWrites=true&w=majority")
-db = client.sparta
+# DB info
 
 SECRET_KEY = 'tree'
 @app.route('/')
